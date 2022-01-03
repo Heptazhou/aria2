@@ -67,8 +67,8 @@ Basic Options
 
      .. code-block:: text
 
-	http://example.com/foo
-	http://example.com/bar
+	https://example.com/foo
+	https://example.com/bar
 
      Here is 2 download items.  aria2 can download these items
      concurrently if the value more than or equal 2 is given to
@@ -267,7 +267,7 @@ HTTP/FTP/SFTP Options
 
     .. code-block:: console
 
-      $ aria2c -o myfile.zip "http://mirror1/file.zip" "http://mirror2/file.zip"
+      $ aria2c -o myfile.zip "https://mirror1/file.zip" "https://mirror2/file.zip"
 
 .. option:: --proxy-method=<METHOD>
 
@@ -532,7 +532,7 @@ HTTP Specific Options
 
   .. code-block:: console
 
-        $ aria2c --header="X-A: b78" --header="X-B: 9J1" "http://host/file"
+        $ aria2c --header="X-A: b78" --header="X-B: 9J1" "https://host/file"
 
 .. option:: --load-cookies=<FILE>
 
@@ -1621,9 +1621,9 @@ Advanced Options
 .. option:: -P, --parameterized-uri [true|false]
 
   Enable parameterized URI support.
-  You can specify set of parts: ``http://{sv1,sv2,sv3}/foo.iso``.
+  You can specify set of parts: ``https://{sv1,sv2,sv3}/foo.iso``.
   Also you can specify numeric sequences with step counter:
-  ``http://host/image[000-100:2].img``.
+  ``https://host/image[000-100:2].img``.
   A step counter can be omitted.
   If all URIs do not point to the same file, such as the second example above,
   -Z option is required.
@@ -1750,7 +1750,7 @@ supported. The multiple ``tr`` parameters are supported.  Because
 BitTorrent Magnet URI is likely to contain ``&`` character, it is highly
 recommended to always quote URI with single(``'``) or double(``"``) quotation.
 It is strongly recommended to enable DHT especially when ``tr``
-parameter is missing. See http://www.bittorrent.org/beps/bep_0009.html
+parameter is missing. See https://www.bittorrent.org/beps/bep_0009.html
 for more details about BitTorrent Magnet URI.
 
 You can also specify arbitrary number of torrent files and Metalink
@@ -1811,7 +1811,7 @@ Let's see an example of how arguments are passed to command:
   $ cat hook.sh
   #!/bin/sh
   echo "Called with [$1] [$2] [$3]"
-  $ aria2c --on-download-complete hook.sh http://example.org/file.iso
+  $ aria2c --on-download-complete hook.sh https://example.org/file.iso
   Called with [1] [1] [/path/to/file.iso]
 
 .. _exit-status:
@@ -2236,16 +2236,16 @@ stripped.
 
 For example, the content of uri.txt is::
 
-  http://server/file.iso http://mirror/file.iso
+  https://server/file.iso https://mirror/file.iso
     dir=/iso_images
     out=file.img
-  http://foo/bar
+  https://foo/bar
 
 
 If aria2 is executed with ``-i uri.txt -d /tmp`` options, then
 ``file.iso`` is saved as ``/iso_images/file.img`` and it is downloaded
-from ``http://server/file.iso`` and ``http://mirror/file.iso``.  The file
-``bar`` is downloaded from ``http://foo/bar`` and saved as ``/tmp/bar``.
+from ``https://server/file.iso`` and ``https://mirror/file.iso``.  The file
+``bar`` is downloaded from ``https://foo/bar`` and saved as ``/tmp/bar``.
 
 In some cases, :option:`out <-o>` parameter has no effect.
 See note of :option:`--out <-o>`
@@ -2321,7 +2321,7 @@ The WebSocket URI for JSON-RPC over WebSocket is
 ``wss://HOST:PORT/jsonrpc`` instead.
 
 The implemented JSON-RPC is based on JSON-RPC 2.0
-<http://jsonrpc.org/specification>, and
+<https://jsonrpc.org/specification>, and
 supports HTTP POST and GET (JSONP).  The WebSocket transport is
 an aria2 extension.
 
@@ -2365,7 +2365,7 @@ will removed from the parameter list before the request is being processed.
 For example, if the RPC secret authorization token is ``$$secret$$``,
 calling `aria2.addUri` RPC method would have to look like this::
 
-  aria2.addUri("token:$$secret$$", ["http://example.org/file"])
+  aria2.addUri("token:$$secret$$", ["https://example.org/file"])
 
 The `system.multicall` RPC method is treated specially. Since the XML-RPC
 specification only allows a single array as a parameter for this method, we
@@ -2406,35 +2406,35 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
 
   **JSON-RPC Example**
 
-  The following example adds ``http://example.org/file``::
+  The following example adds ``https://example.org/file``::
 
     >>> import urllib2, json
     >>> jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer',
     ...                       'method':'aria2.addUri',
-    ...                       'params':[['http://example.org/file']]})
+    ...                       'params':[['https://example.org/file']]})
     >>> c = urllib2.urlopen('http://localhost:6800/jsonrpc', jsonreq)
     >>> c.read()
     '{"id":"qwer","jsonrpc":"2.0","result":"2089b05ecca3d829"}'
 
   **XML-RPC Example**
 
-  The following example adds ``http://example.org/file``::
+  The following example adds ``https://example.org/file``::
 
     >>> import xmlrpclib
     >>> s = xmlrpclib.ServerProxy('http://localhost:6800/rpc')
-    >>> s.aria2.addUri(['http://example.org/file'])
+    >>> s.aria2.addUri(['https://example.org/file'])
     '2089b05ecca3d829'
 
   The following example adds a new download with two sources and some options::
 
-    >>> s.aria2.addUri(['http://example.org/file', 'http://mirror/file'],
+    >>> s.aria2.addUri(['https://example.org/file', 'https://mirror/file'],
                         dict(dir="/tmp"))
     'd2703803b52216d1'
 
   The following example adds a download and inserts it to the front of the
   queue::
 
-    >>> s.aria2.addUri(['http://example.org/file'], {}, 0)
+    >>> s.aria2.addUri(['https://example.org/file'], {}, 0)
     'ca3d829cee549a4d'
 
 .. function:: aria2.addTorrent([secret], torrent[, uris[, options[, position]]])
@@ -2764,7 +2764,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
                              u'path': u'/downloads/file',
                              u'selected': u'true',
                              u'uris': [{u'status': u'used',
-                                        u'uri': u'http://example.org/file'}]}],
+                                        u'uri': u'https://example.org/file'}]}],
                  u'gid': u'2089b05ecca3d829',
                  u'numPieces': u'34',
                  u'pieceLength': u'1048576',
@@ -2810,7 +2810,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
                 'path': '/downloads/file',
                 'selected': 'true',
                 'uris': [{'status': 'used',
-                          'uri': 'http://example.org/file'}]}],
+                          'uri': 'https://example.org/file'}]}],
      'gid': '2089b05ecca3d829',
      'numPieces': '17',
      'pieceLength': '2097152',
@@ -2851,7 +2851,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
     {u'id': u'qwer',
      u'jsonrpc': u'2.0',
      u'result': [{u'status': u'used',
-                  u'uri': u'http://example.org/file'}]}
+                  u'uri': u'https://example.org/file'}]}
 
   **XML-RPC Example**
   ::
@@ -2861,7 +2861,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
     >>> s = xmlrpclib.ServerProxy('http://localhost:6800/rpc')
     >>> r = s.aria2.getUris('2089b05ecca3d829')
     >>> pprint(r)
-    [{'status': 'used', 'uri': 'http://example.org/file'}]
+    [{'status': 'used', 'uri': 'https://example.org/file'}]
 
 .. function:: aria2.getFiles([secret], gid)
 
@@ -2916,7 +2916,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
                   u'path': u'/downloads/file',
                   u'selected': u'true',
                   u'uris': [{u'status': u'used',
-                             u'uri': u'http://example.org/file'}]}]}
+                             u'uri': u'https://example.org/file'}]}]}
 
   **XML-RPC Example**
   ::
@@ -2932,7 +2932,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
       'path': '/downloads/file',
       'selected': 'true',
       'uris': [{'status': 'used',
-                'uri': 'http://example.org/file'}]}]
+                'uri': 'https://example.org/file'}]}]
 
 .. function:: aria2.getPeers([secret], gid)
 
@@ -3064,9 +3064,9 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
     {u'id': u'qwer',
      u'jsonrpc': u'2.0',
      u'result': [{u'index': u'1',
-                  u'servers': [{u'currentUri': u'http://example.org/file',
+                  u'servers': [{u'currentUri': u'https://example.org/file',
                                 u'downloadSpeed': u'10467',
-                                u'uri': u'http://example.org/file'}]}]}
+                                u'uri': u'https://example.org/file'}]}]}
 
   **XML-RPC Example**
   ::
@@ -3077,9 +3077,9 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
     >>> r = s.aria2.getServers('2089b05ecca3d829')
     >>> pprint(r)
     [{'index': '1',
-      'servers': [{'currentUri': 'http://example.org/dl/file',
+      'servers': [{'currentUri': 'https://example.org/dl/file',
                    'downloadSpeed': '20285',
-                   'uri': 'http://example.org/file'}]}]
+                   'uri': 'https://example.org/file'}]}]
 
 .. function:: aria2.tellActive([secret], [keys])
 
@@ -3185,13 +3185,13 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
   not the position when this method is called.  When removing an URI, if
   the same URIs exist in download, only one of them is removed for each URI
   in *delUris*. In other words, if there are three URIs
-  ``http://example.org/aria2`` and you want remove them all, you have to
-  specify (at least) 3 ``http://example.org/aria2`` in *delUris*.  This
+  ``https://example.org/aria2`` and you want remove them all, you have to
+  specify (at least) 3 ``https://example.org/aria2`` in *delUris*.  This
   method returns a list which contains two integers. The first integer is
   the number of URIs deleted. The second integer is the number of URIs
   added.
 
-  The following examples add the URI ``http://example.org/file`` to the
+  The following examples add the URI ``https://example.org/file`` to the
   file whose index is ``1`` and belongs to the download
   GID#2089b05ecca3d829.
 
@@ -3204,7 +3204,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
     >>> jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer',
     ...                       'method':'aria2.changeUri',
     ...                       'params':['2089b05ecca3d829', 1, [],
-                                        ['http://example.org/file']]})
+                                        ['https://example.org/file']]})
     >>> c = urllib2.urlopen('http://localhost:6800/jsonrpc', jsonreq)
     >>> pprint(json.loads(c.read()))
     {u'id': u'qwer', u'jsonrpc': u'2.0', u'result': [0, 1]}
@@ -3216,7 +3216,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
     >>> import xmlrpclib
     >>> s = xmlrpclib.ServerProxy('http://localhost:6800/rpc')
     >>> s.aria2.changeUri('2089b05ecca3d829', 1, [],
-                          ['http://example.org/file'])
+                          ['https://example.org/file'])
     [0, 1]
 
 .. function:: aria2.getOption([secret], gid)
@@ -3562,7 +3562,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
   fails.
 
   In the following examples, we add 2 downloads. The first one is
-  ``http://example.org/file`` and the second one is ``file.torrent``.
+  ``https://example.org/file`` and the second one is ``file.torrent``.
 
   **JSON-RPC Example**
   ::
@@ -3572,7 +3572,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
     >>> jsonreq = json.dumps({'jsonrpc':'2.0', 'id':'qwer',
     ...                       'method':'system.multicall',
     ...                       'params':[[{'methodName':'aria2.addUri',
-    ...                                   'params':[['http://example.org']]},
+    ...                                   'params':[['https://example.org']]},
     ...                                  {'methodName':'aria2.addTorrent',
     ...                                   'params':[base64.b64encode(open('file.torrent').read())]}]]})
     >>> c = urllib2.urlopen('http://localhost:6800/jsonrpc', jsonreq)
@@ -3584,7 +3584,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
 
     >>> jsonreq = json.dumps([{'jsonrpc':'2.0', 'id':'qwer',
     ...                        'method':'aria2.addUri',
-    ...                        'params':[['http://example.org']]},
+    ...                        'params':[['https://example.org']]},
     ...                       {'jsonrpc':'2.0', 'id':'asdf',
     ...                        'method':'aria2.addTorrent',
     ...                        'params':[base64.b64encode(open('file.torrent').read())]}])
@@ -3599,7 +3599,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
     >>> import xmlrpclib
     >>> s = xmlrpclib.ServerProxy('http://localhost:6800/rpc')
     >>> mc = xmlrpclib.MultiCall(s)
-    >>> mc.aria2.addUri(['http://example.org/file'])
+    >>> mc.aria2.addUri(['https://example.org/file'])
     >>> mc.aria2.addTorrent(xmlrpclib.Binary(open('file.torrent', mode='rb').read()))
     >>> r = mc()
     >>> tuple(r)
@@ -3748,7 +3748,7 @@ The ``header`` option requires two values, so it uses a list::
   >>> opts = dict(dir='/tmp',
   ...             header=['Accept-Language: ja',
   ...                     'Accept-Charset: utf-8'])
-  >>> s.aria2.addUri(['http://example.org/file'], opts)
+  >>> s.aria2.addUri(['https://example.org/file'], opts)
   '1'
 
 
@@ -3963,7 +3963,7 @@ Download a file
 ^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c "http://host/file.zip"
+  $ aria2c "https://host/file.zip"
 
 
 .. note::
@@ -3976,14 +3976,14 @@ Download a file from two different HTTP servers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c "http://host/file.zip" "http://mirror/file.zip"
+  $ aria2c "https://host/file.zip" "https://mirror/file.zip"
 
 
 Download a file from one host using multiple connections
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c -x2 -k1M "http://host/file.zip"
+  $ aria2c -x2 -k1M "https://host/file.zip"
 
 .. note::
 
@@ -3995,7 +3995,7 @@ Download a file from HTTP and FTP servers at the same time
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c "http://host1/file.zip" "ftp://host2/file.zip"
+  $ aria2c "https://host1/file.zip" "ftp://host2/file.zip"
 
 
 Download files listed in a text file concurrently
@@ -4014,12 +4014,12 @@ For HTTP:
 
 .. code-block:: console
 
-  $ aria2c --http-proxy="http://proxy:8080" "http://host/file"
+  $ aria2c --http-proxy="http://proxy:8080" "https://host/file"
 
 
 .. code-block:: console
 
-  $ aria2c --http-proxy="http://proxy:8080" --no-proxy="localhost,127.0.0.1,192.168.0.0/16" "http://host/file"
+  $ aria2c --http-proxy="http://proxy:8080" --no-proxy="localhost,127.0.0.1,192.168.0.0/16" "https://host/file"
 
 
 For FTP:
@@ -4038,11 +4038,11 @@ Using a Proxy with authorization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c --http-proxy="http://username:password@proxy:8080" "http://host/file"
+  $ aria2c --http-proxy="http://username:password@proxy:8080" "https://host/file"
 
 .. code-block:: console
 
-  $ aria2c --http-proxy="http://proxy:8080" --http-proxy-user="username" --http-proxy-passwd="password" "http://host/file"
+  $ aria2c --http-proxy="http://proxy:8080" --http-proxy-user="username" --http-proxy-passwd="password" "https://host/file"
 
 
 Metalink Download
@@ -4051,7 +4051,7 @@ Download files with remote Metalink
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c --follow-metalink=mem "http://host/file.metalink"
+  $ aria2c --follow-metalink=mem "https://host/file.metalink"
 
 
 Download using a local metalink file
@@ -4096,7 +4096,7 @@ Download files using a remote BitTorrent file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c --follow-torrent=mem "http://host/file.torrent"
+  $ aria2c --follow-torrent=mem "https://host/file.torrent"
 
 
 Download using a local torrent file
@@ -4138,7 +4138,7 @@ Download a file via torrent and HTTP/FTP server in parallel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c -Ttest.torrent "http://host1/file" "ftp://host2/file"
+  $ aria2c -Ttest.torrent "https://host1/file" "ftp://host2/file"
 
 Only download specific files (usually called "selected download")
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4154,7 +4154,7 @@ Download a .torrent file, but do not download the torrent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c --follow-torrent=false "http://host/file.torrent"
+  $ aria2c --follow-torrent=false "https://host/file.torrent"
 
 Specify the output file name
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4237,11 +4237,11 @@ Add and remove tracker URIs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ignore all tracker announce URIs defined in file.torrent and use
-``http://tracker1/announce`` and ``http://tracker2/announce`` instead:
+``https://tracker1/announce`` and ``https://tracker2/announce`` instead:
 
 .. code-block:: console
 
-  $ aria2c --bt-exclude-tracker="*" --bt-tracker="http://tracker1/announce,http://tracker2/announce" file.torrent
+  $ aria2c --bt-exclude-tracker="*" --bt-tracker="https://tracker1/announce,https://tracker2/announce" file.torrent
 
 
 More advanced HTTP features
@@ -4250,7 +4250,7 @@ Load cookies
 ^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c --load-cookies=cookies.txt "http://host/file.zip"
+  $ aria2c --load-cookies=cookies.txt "https://host/file.zip"
 
 .. note::
 
@@ -4260,7 +4260,7 @@ Resume download started by web browsers or other programs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c -c -s2 "http://host/partiallydownloadedfile.zip"
+  $ aria2c -c -s2 "https://host/partiallydownloadedfile.zip"
 
 .. note::
 
@@ -4370,14 +4370,14 @@ You can specify set of parts:
 
 .. code-block:: console
 
-  $ aria2c -P "http://{host1,host2,host3}/file.iso"
+  $ aria2c -P "https://{host1,host2,host3}/file.iso"
 
 
 You can specify numeric sequence:
 
 .. code-block:: console
 
-  $ aria2c -Z -P "http://host/image[000-100].png"
+  $ aria2c -Z -P "https://host/image[000-100].png"
 
 
 .. note::
@@ -4389,21 +4389,21 @@ You can specify step counter:
 
 .. code-block:: console
 
-  $ aria2c -Z -P "http://host/image[A-Z:2].png"
+  $ aria2c -Z -P "https://host/image[A-Z:2].png"
 
 
 Verifying checksums
 ^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c --checksum=sha-1=0192ba11326fe2298c8cb4de616f4d4140213837 http://example.org/file
+  $ aria2c --checksum=sha-1=0192ba11326fe2298c8cb4de616f4d4140213837 https://example.org/file
 
 
 Parallel downloads of an arbitrary number of URIs, metalink, torrent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: console
 
-  $ aria2c -j3 -Z "http://host/file1" file2.torrent file3.metalink
+  $ aria2c -j3 -Z "https://host/file1" file2.torrent file3.metalink
 
 
 BitTorrent Encryption
@@ -4419,7 +4419,7 @@ SEE ALSO
 --------
 Project Web Site: https://aria2.github.io/
 
-Metalink Homepage: http://www.metalinker.org/
+Metalink Homepage: https://www.metalinker.org/
 
 The Metalink Download Description Format: :rfc:`5854`
 

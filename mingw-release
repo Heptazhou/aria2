@@ -31,7 +31,7 @@
 # version.  If you delete this exception statement from all source
 # files in the program, then also delete it here.
 
-test -z "$HOST" && HOST=i686-w64-mingw32
+test -z "$HOST" && HOST=x86_64-w64-mingw32
 test -z "$BUILD_VER" && BUILD_VER=1
 test -z "$LABEL" && LABEL=$HOST
 
@@ -46,10 +46,11 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-DIST_DIR=aria2-${VERSION}-${LABEL}-build${BUILD_VER}
+DIST_DIR=aria2-v$VERSION-$BUILD_VER
 
-mkdir "$DIST_DIR"
-cp AUTHORS COPYING ChangeLog LICENSE.OpenSSL NEWS README.html README.mingw \
-    mingw-out/aria2c.exe "$DIST_DIR"
-zip -9 -r "$DIST_DIR.zip" "$DIST_DIR"
-rm -rf "$DIST_DIR"
+mkdir $DIST_DIR
+cp README.rst README
+cp AUTHORS ChangeLog LICENSE LICENSE.OpenSSL NEWS README README.html README.mingw \
+    src/aria2c.exe $DIST_DIR
+zip -r9 /aria2.zip $DIST_DIR
+rm -rf README $DIST_DIR

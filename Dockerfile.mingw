@@ -1,114 +1,139 @@
-# Dockerfile to build aria2 Windows binary using ubuntu mingw-w64
+# Dockerfile to build aria2 Windows binary using arch mingw-w64
 # cross compiler chain.
 #
-# $ sudo docker build -t aria2-mingw - < Dockerfile.mingw
+# $ docker build -t aria2-mingw -< Dockerfile.mingw
 #
 # After successful build, windows binary is located at
-# /aria2/src/aria2c.exe.  You can copy the binary using following
-# commands:
+# /aria2/src/aria2c.exe.
 #
-# $ sudo docker run --rm -it -v /path/to/dest:/out aria2-mingw cp /aria2/src/aria2c.exe /out
+# $ id=`docker create aria2-mingw` && docker cp $id:/aria2.zip . && docker rm -v $id
 
-FROM ubuntu:22.04
+FROM archlinux:base-devel
 
 MAINTAINER Tatsuhiro Tsujikawa
 
-# Change HOST to x86_64-w64-mingw32 to build 64-bit binary
-ARG HOST=i686-w64-mingw32
+# Change HOST to i686-w64-mingw32 to build 32-bit binary
+ENV HOST   x86_64-w64-mingw32
+ENV PREFIX /usr/$HOST
+
+ENV ver_cares  1.33.1
+ENV ver_expat  2.6.3
+ENV ver_gmp    6.3.0
+ENV ver_libssh 1.11.0
+ENV ver_zlib   1.3.1
+ENV ver_sqlite 3460100
+
+ENV mk "make -O -j8"
+
+RUN MIRRORLIST=/etc/pacman.d/mirrorlist && \
+    echo 'Server = https://mirrors.dotsrc.org/archlinux/$repo/os/$arch' >> $MIRRORLIST && \
+    echo 'Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch' >> $MIRRORLIST && \
+    tac $MIRRORLIST > $MIRRORLIST~ && mv $MIRRORLIST{~,}
 
 # It would be better to use nearest ubuntu archive mirror for faster
 # downloads.
 # RUN sed -ie 's/archive\.ubuntu/jp.archive.ubuntu/g' /etc/apt/sources.list
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND="noninteractive" \
-    apt-get install -y --no-install-recommends \
-        make binutils autoconf automake autotools-dev libtool \
-        patch ca-certificates \
-        pkg-config git curl dpkg-dev gcc-mingw-w64 g++-mingw-w64 \
-        autopoint libcppunit-dev libxml2-dev libgcrypt20-dev lzip \
-        python3-docutils
+# RUN apt update && \
+#     DEBIAN_FRONTEND="noninteractive" \
+#     apt install -y --no-install-recommends \
+#         make binutils autoconf automake autotools-dev libtool \
+#         patch ca-certificates \
+#         pkg-config git curl dpkg-dev gcc-mingw-w64 g++-mingw-w64 \
+#         autopoint libcppunit-dev libxml2-dev libgcrypt20-dev lzip \
+#         python3-docutils
+RUN pacman-key --init && \
+    pacman -Syu --noconfirm && \
+    pacman -S --needed --noconfirm \
+        git mingw-w64-gcc cppunit lzip python-{docutils,sphinx} \
+        zip dpkg
 
-RUN curl -L -O https://gmplib.org/download/gmp/gmp-6.3.0.tar.xz && \
-    curl -L -O https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-2.5.0.tar.bz2 && \
-    curl -L -O https://www.sqlite.org/2023/sqlite-autoconf-3430100.tar.gz && \
-    curl -L -O https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz && \
-    curl -L -O https://github.com/c-ares/c-ares/releases/download/cares-1_19_1/c-ares-1.19.1.tar.gz && \
-    curl -L -O https://libssh2.org/download/libssh2-1.11.0.tar.bz2
+RUN x="curl -LO --fail-with-body --http2 --tlsv1.2" && \
+    $x https://gmplib.org/download/gmp/gmp-$ver_gmp.tar.xz && \
+    $x https://github.com/libexpat/libexpat/releases/download/R_${ver_expat//./_}/expat-$ver_expat.tar.xz && \
+    $x https://sqlite.org/2024/sqlite-autoconf-$ver_sqlite.tar.gz && \
+    $x https://github.com/madler/zlib/releases/download/v$ver_zlib/zlib-$ver_zlib.tar.xz && \
+    $x https://github.com/c-ares/c-ares/releases/download/v$ver_cares/c-ares-$ver_cares.tar.gz && \
+    $x https://libssh2.org/download/libssh2-$ver_libssh.tar.xz
 
-RUN tar xf gmp-6.3.0.tar.xz && \
-    cd gmp-6.3.0 && \
+RUN tar xf gmp-$ver_gmp.tar.xz && \
+    cd gmp-$ver_gmp && \
     ./configure \
         --disable-shared \
         --enable-static \
-        --prefix=/usr/local/$HOST \
+        --prefix=$PREFIX \
         --host=$HOST \
         --disable-cxx \
         --enable-fat \
         CFLAGS="-mtune=generic -O2 -g0" && \
-    make -j$(nproc) install
+    $mk install
 
-RUN tar xf expat-2.5.0.tar.bz2 && \
-    cd expat-2.5.0 && \
+RUN tar xf expat-$ver_expat.tar.xz && \
+    cd expat-$ver_expat && \
     ./configure \
         --disable-shared \
         --enable-static \
-        --prefix=/usr/local/$HOST \
+        --prefix=$PREFIX \
         --host=$HOST \
         --build=`dpkg-architecture -qDEB_BUILD_GNU_TYPE` && \
-    make -j$(nproc) install
+    $mk install
 
-RUN tar xf sqlite-autoconf-3430100.tar.gz && \
-    cd sqlite-autoconf-3430100 && \
+RUN tar xf sqlite-autoconf-$ver_sqlite.tar.gz && \
+    cd sqlite-autoconf-$ver_sqlite && \
     ./configure \
         --disable-shared \
         --enable-static \
-        --prefix=/usr/local/$HOST \
+        --prefix=$PREFIX \
         --host=$HOST \
         --build=`dpkg-architecture -qDEB_BUILD_GNU_TYPE` && \
-    make -j$(nproc) install
+    $mk install
 
-RUN tar xf zlib-1.3.1.tar.gz && \
-    cd zlib-1.3.1 && \
+RUN tar xf zlib-$ver_zlib.tar.xz && \
+    cd zlib-$ver_zlib && \
     CC=$HOST-gcc \
     AR=$HOST-ar \
     LD=$HOST-ld \
     RANLIB=$HOST-ranlib \
     STRIP=$HOST-strip \
     ./configure \
-        --prefix=/usr/local/$HOST \
-        --libdir=/usr/local/$HOST/lib \
-        --includedir=/usr/local/$HOST/include \
+        --prefix=$PREFIX \
+        --libdir=$PREFIX/lib \
+        --includedir=$PREFIX/include \
         --static && \
-    make -j$(nproc) install
+    $mk install
 
-RUN tar xf c-ares-1.19.1.tar.gz && \
-    cd c-ares-1.19.1 && \
+RUN tar xf c-ares-$ver_cares.tar.gz && \
+    cd c-ares-$ver_cares && \
     ./configure \
         --disable-shared \
         --enable-static \
         --without-random \
-        --prefix=/usr/local/$HOST \
+        --prefix=$PREFIX \
         --host=$HOST \
         --build=`dpkg-architecture -qDEB_BUILD_GNU_TYPE` \
         LIBS="-lws2_32" && \
-    make -j$(nproc) install
+    $mk install
 
-RUN tar xf libssh2-1.11.0.tar.bz2 && \
-    cd libssh2-1.11.0 && \
+RUN tar xf libssh2-$ver_libssh.tar.xz && \
+    cd libssh2-$ver_libssh && \
     ./configure \
         --disable-shared \
         --enable-static \
-        --prefix=/usr/local/$HOST \
+        --prefix=$PREFIX \
         --host=$HOST \
         --build=`dpkg-architecture -qDEB_BUILD_GNU_TYPE` \
         LIBS="-lws2_32" && \
-    make -j$(nproc) install
+    $mk install
+
+ENV tag_last release-1.37.0
+ENV rel_ver  1
 
 ARG ARIA2_VERSION=master
 ARG ARIA2_REF=refs/heads/master
 
-ADD https://api.github.com/repos/aria2/aria2/git/$ARIA2_REF version.json
-RUN git clone -b $ARIA2_VERSION --depth 1 https://github.com/aria2/aria2 && \
-    cd aria2 && autoreconf -i && ./mingw-config && make -j$(nproc) && \
-    $HOST-strip src/aria2c.exe
+ADD https://api.github.com/repos/Heptazhou/aria2/git/$ARIA2_REF version.json
+RUN git clone https://github.com/Heptazhou/aria2 -b "$ARIA2_VERSION"
+RUN cd aria2 && autoreconf -i && ./mingw-config && $mk
+RUN cd aria2 && $HOST-strip src/aria2c.exe
+RUN cd aria2 && git log --decorate --date=iso --format=fuller $tag_last~1...HEAD > ChangeLog
+RUN cd aria2 && chmod +x mingw-release && BUILD_VER=$rel_ver ./mingw-release

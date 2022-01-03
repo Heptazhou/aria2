@@ -1,5 +1,5 @@
 # Any copyright is dedicated to the Public Domain.
-# http://creativecommons.org/publicdomain/zero/1.0/
+# https://creativecommons.org/publicdomain/zero/1.0/
 # Written by Nils Maier
 
 # This make file will:
@@ -103,7 +103,7 @@ LTO_FLAGS = -flto -ffunction-sections -fdata-sections
 # Dependency versions
 zlib_version = 1.2.11
 zlib_hash = c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1
-zlib_url = http://zlib.net/zlib-$(zlib_version).tar.gz
+zlib_url = https://zlib.net/zlib-$(zlib_version).tar.gz
 
 expat_version = 2.2.8
 expat_hash = bd507cba42716ca9afe46dd3687fb0d46c09347517beb9770f53a435d2c67ea0
@@ -156,7 +156,7 @@ libssh2_nocheck = yes
 
 cppunit_version = 1.12.1
 cppunit_hash = ac28a04c8e6c9217d910b0ae7122832d28d9917fa668bcc9e0b8b09acb4ea44a
-cppunit_url = http://sourceforge.net/projects/cppunit/files/cppunit/$(cppunit_version)/cppunit-$(cppunit_version).tar.gz
+cppunit_url = https://sourceforge.net/projects/cppunit/files/cppunit/$(cppunit_version)/cppunit-$(cppunit_version).tar.gz
 cppunit_cflags=$(CFLAGS) $(LTO_FLAGS)
 cppunit_cxxflags=$(CXXFLAGS) $(LTO_FLAGS)
 
@@ -199,7 +199,7 @@ ARIA2_CONFFLAGS = \
 ARIA2_DOCDIR = $(ARIA2_PREFIX)/share/doc/aria2
 ARIA2_DOCS = \
 	     $(ARIA2_DOCDIR)/AUTHORS \
-	     $(ARIA2_DOCDIR)/COPYING \
+	     $(ARIA2_DOCDIR)/LICENSE \
 	     $(ARIA2_DOCDIR)/NEWS
 ARIA2_CHANGELOG = $(ARIA2_DOCDIR)/Changelog
 

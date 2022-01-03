@@ -57,8 +57,8 @@ Here is a list of features:
 * Download/Upload speed throttling
 * BitTorrent extensions: Fast extension, DHT, PEX, MSE/PSE,
   Multi-Tracker, UDP tracker
-* BitTorrent `WEB-Seeding <http://getright.com/seedtorrent.html>`_.
-  aria2 requests chunk more than piece size to reduce the request
+* BitTorrent `WEB-Seeding <https://getright.com/seedtorrent.html>`_.
+  aria2 requests chunks more than piece size to reduce the request
   overhead. It also supports pipelined requests with piece size.
 * BitTorrent Local Peer Discovery
 * Rename/change the directory structure of BitTorrent downloads
@@ -181,7 +181,7 @@ script respectively.
 
 To enable async DNS support, you need c-ares.
 
-* c-ares: http://c-ares.haxx.se/
+* c-ares: https://c-ares.org/
 
 How to build
 ------------
@@ -239,7 +239,7 @@ necessary to build the program::
 
     $ autoreconf -i
 
-Also, you need `Sphinx <http://sphinx-doc.org/>`_ to build the man page.
+Also, you need `Sphinx <https://sphinx-doc.org/>`_ to build the man page.
 
 If you are building aria2 for Mac OS X, take a look at
 the makerelease-osx.mk GNU Make makefile.
@@ -305,8 +305,8 @@ Cross-compiling Windows binary
 ------------------------------
 
 In this section, we describe how to build a Windows binary using a
-mingw-w64 (http://mingw-w64.org/doku.php) cross-compiler on Debian
-Linux. The MinGW (http://www.mingw.org/) may not be able to build
+mingw-w64 (https://www.mingw-w64.org/) cross-compiler on Debian
+Linux. The MinGW (https://www.mingw.org/) may not be able to build
 aria2.
 
 The easiest way to build Windows binary is using Dockerfile.mingw.  See
@@ -391,7 +391,7 @@ After ``android-config``, run ``make`` to compile sources.
 Building documentation
 ----------------------
 
-`Sphinx <http://sphinx-doc.org/>`_ is used to building the
+`Sphinx <http://sphinx-doc.org/>`_ is used to build the
 documentation. aria2 man pages will be build when you run ``make`` if
 they are not up-to-date.  You can also build an HTML version of the aria2
 man page by ``make html``. The HTML version manual is also available
@@ -535,31 +535,31 @@ References
 
 * `aria2 Online Manual <https://aria2.github.io/manual/en/html/>`_
 * https://aria2.github.io/
-* `RFC 959 FILE TRANSFER PROTOCOL (FTP) <http://tools.ietf.org/html/rfc959>`_
-* `RFC 1738 Uniform Resource Locators (URL) <http://tools.ietf.org/html/rfc1738>`_
-* `RFC 2428 FTP Extensions for IPv6 and NATs <http://tools.ietf.org/html/rfc2428>`_
-* `RFC 2616 Hypertext Transfer Protocol -- HTTP/1.1 <http://tools.ietf.org/html/rfc2616>`_
-* `RFC 3659 Extensions to FTP <http://tools.ietf.org/html/rfc3659>`_
-* `RFC 3986 Uniform Resource Identifier (URI): Generic Syntax <http://tools.ietf.org/html/rfc3986>`_
-* `RFC 4038 Application Aspects of IPv6 Transition <http://tools.ietf.org/html/rfc4038>`_
-* `RFC 5854 The Metalink Download Description Format <http://tools.ietf.org/html/rfc5854>`_
-* `RFC 6249 Metalink/HTTP: Mirrors and Hashes <http://tools.ietf.org/html/rfc6249>`_
-* `RFC 6265 HTTP State Management Mechanism <http://tools.ietf.org/html/rfc6265>`_
-* `RFC 6266 Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP) <http://tools.ietf.org/html/rfc6266>`_
-* `RFC 6455 The WebSocket Protocol <http://tools.ietf.org/html/rfc6455>`_
-* `RFC 6555 Happy Eyeballs: Success with Dual-Stack Hosts <http://tools.ietf.org/html/rfc6555>`_
+* `RFC 959 FILE TRANSFER PROTOCOL (FTP) <https://tools.ietf.org/html/rfc959>`_
+* `RFC 1738 Uniform Resource Locators (URL) <https://tools.ietf.org/html/rfc1738>`_
+* `RFC 2428 FTP Extensions for IPv6 and NATs <https://tools.ietf.org/html/rfc2428>`_
+* `RFC 2616 Hypertext Transfer Protocol -- HTTP/1.1 <https://tools.ietf.org/html/rfc2616>`_
+* `RFC 3659 Extensions to FTP <https://tools.ietf.org/html/rfc3659>`_
+* `RFC 3986 Uniform Resource Identifier (URI): Generic Syntax <https://tools.ietf.org/html/rfc3986>`_
+* `RFC 4038 Application Aspects of IPv6 Transition <https://tools.ietf.org/html/rfc4038>`_
+* `RFC 5854 The Metalink Download Description Format <https://tools.ietf.org/html/rfc5854>`_
+* `RFC 6249 Metalink/HTTP: Mirrors and Hashes <https://tools.ietf.org/html/rfc6249>`_
+* `RFC 6265 HTTP State Management Mechanism <https://tools.ietf.org/html/rfc6265>`_
+* `RFC 6266 Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP) <https://tools.ietf.org/html/rfc6266>`_
+* `RFC 6455 The WebSocket Protocol <https://tools.ietf.org/html/rfc6455>`_
+* `RFC 6555 Happy Eyeballs: Success with Dual-Stack Hosts <https://tools.ietf.org/html/rfc6555>`_
 
-* `The BitTorrent Protocol Specification <http://www.bittorrent.org/beps/bep_0003.html>`_
-* `BitTorrent: DHT Protocol <http://www.bittorrent.org/beps/bep_0005.html>`_
-* `BitTorrent: Fast Extension <http://www.bittorrent.org/beps/bep_0006.html>`_
-* `BitTorrent: IPv6 Tracker Extension <http://www.bittorrent.org/beps/bep_0007.html>`_
-* `BitTorrent: Extension for Peers to Send Metadata Files <http://www.bittorrent.org/beps/bep_0009.html>`_
-* `BitTorrent: Extension Protocol <http://www.bittorrent.org/beps/bep_0010.html>`_
-* `BitTorrent: Multitracker Metadata Extension <http://www.bittorrent.org/beps/bep_0012.html>`_
-* `BitTorrent: UDP Tracker Protocol for BitTorrent <http://www.bittorrent.org/beps/bep_0015.html>`_
-  and `BitTorrent udp-tracker protocol specification <http://www.rasterbar.com/products/libtorrent/udp_tracker_protocol.html>`_.
-* `BitTorrent: WebSeed - HTTP/FTP Seeding (GetRight style) <http://www.bittorrent.org/beps/bep_0019.html>`_
-* `BitTorrent: Private Torrents <http://www.bittorrent.org/beps/bep_0027.html>`_
-* `BitTorrent: BitTorrent DHT Extensions for IPv6 <http://www.bittorrent.org/beps/bep_0032.html>`_
-* `BitTorrent: Message Stream Encryption <http://wiki.vuze.com/w/Message_Stream_Encryption>`_
+* `The BitTorrent Protocol Specification <https://www.bittorrent.org/beps/bep_0003.html>`_
+* `BitTorrent: DHT Protocol <https://www.bittorrent.org/beps/bep_0005.html>`_
+* `BitTorrent: Fast Extension <https://www.bittorrent.org/beps/bep_0006.html>`_
+* `BitTorrent: IPv6 Tracker Extension <https://www.bittorrent.org/beps/bep_0007.html>`_
+* `BitTorrent: Extension for Peers to Send Metadata Files <https://www.bittorrent.org/beps/bep_0009.html>`_
+* `BitTorrent: Extension Protocol <https://www.bittorrent.org/beps/bep_0010.html>`_
+* `BitTorrent: Multitracker Metadata Extension <https://www.bittorrent.org/beps/bep_0012.html>`_
+* `BitTorrent: UDP Tracker Protocol for BitTorrent <https://www.bittorrent.org/beps/bep_0015.html>`_
+  and `BitTorrent udp-tracker protocol specification <https://www.rasterbar.com/products/libtorrent/udp_tracker_protocol.html>`_.
+* `BitTorrent: WebSeed - HTTP/FTP Seeding (GetRight style) <https://www.bittorrent.org/beps/bep_0019.html>`_
+* `BitTorrent: Private Torrents <https://www.bittorrent.org/beps/bep_0027.html>`_
+* `BitTorrent: BitTorrent DHT Extensions for IPv6 <https://www.bittorrent.org/beps/bep_0032.html>`_
+* `BitTorrent: Message Stream Encryption <https://wiki.vuze.com/w/Message_Stream_Encryption>`_
 * `Kademlia: A Peer-to-peer Information System Based on the  XOR Metric <https://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf>`_
