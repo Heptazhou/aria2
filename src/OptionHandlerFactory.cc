@@ -65,7 +65,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(new BooleanOptionHandler(
         PREF_ALLOW_PIECE_LENGTH_CHANGE, TEXT_ALLOW_PIECE_LENGTH_CHANGE,
-        A2_V_FALSE, OptionHandler::OPT_ARG));
+        A2_V_TRUE, OptionHandler::OPT_ARG));
     op->addTag(TAG_ADVANCED);
     op->setInitialOption(true);
     op->setChangeGlobalOption(true);
@@ -74,7 +74,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new BooleanOptionHandler(PREF_ALWAYS_RESUME,
-                                               TEXT_ALWAYS_RESUME, A2_V_TRUE,
+                                               TEXT_ALWAYS_RESUME, A2_V_FALSE,
                                                OptionHandler::OPT_ARG));
     op->addTag(TAG_ADVANCED);
     op->addTag(TAG_FTP);
@@ -125,7 +125,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new BooleanOptionHandler(PREF_CHECK_INTEGRITY,
-                                               TEXT_CHECK_INTEGRITY, A2_V_FALSE,
+                                               TEXT_CHECK_INTEGRITY, A2_V_TRUE,
                                                OptionHandler::OPT_ARG, 'V'));
     op->addTag(TAG_BASIC);
     op->addTag(TAG_BITTORRENT);
@@ -177,7 +177,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
 #ifdef DEFAULT_DISK_CACHE
                                                   DEFAULT_DISK_CACHE,
 #else
-                                                  "16M",
+                                                  "128M",
 #endif
                                                   0));
     op->addTag(TAG_ADVANCED);
@@ -235,7 +235,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new ParameterOptionHandler(
-        PREF_DOWNLOAD_RESULT, TEXT_DOWNLOAD_RESULT, A2_V_DEFAULT,
+        PREF_DOWNLOAD_RESULT, TEXT_DOWNLOAD_RESULT, A2_V_FULL,
         {A2_V_DEFAULT, A2_V_FULL, A2_V_HIDE}));
     op->addTag(TAG_ADVANCED);
     op->setChangeGlobalOption(true);
@@ -264,7 +264,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
 #if defined(HAVE_MMAP) || defined(__MINGW32__)
   {
     OptionHandler* op(new BooleanOptionHandler(PREF_ENABLE_MMAP,
-                                               TEXT_ENABLE_MMAP, A2_V_FALSE,
+                                               TEXT_ENABLE_MMAP, A2_V_TRUE,
                                                OptionHandler::OPT_ARG));
     op->addTag(TAG_ADVANCED);
     op->addTag(TAG_EXPERIMENTAL);
@@ -318,7 +318,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new ParameterOptionHandler(
-        PREF_FILE_ALLOCATION, TEXT_FILE_ALLOCATION, V_PREALLOC,
+        PREF_FILE_ALLOCATION, TEXT_FILE_ALLOCATION, V_NONE,
         {V_NONE, V_PREALLOC, V_TRUNC,
 #ifdef HAVE_SOME_FALLOCATE
          V_FALLOC
@@ -430,7 +430,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(new NumberOptionHandler(PREF_MAX_CONCURRENT_DOWNLOADS,
                                               TEXT_MAX_CONCURRENT_DOWNLOADS,
-                                              "5", 1, -1, 'j'));
+                                              "10", 1, -1, 'j'));
     op->addTag(TAG_BASIC);
     op->setChangeGlobalOption(true);
     handlers.push_back(op);
@@ -438,7 +438,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(new NumberOptionHandler(PREF_MAX_CONNECTION_PER_SERVER,
                                               TEXT_MAX_CONNECTION_PER_SERVER,
-                                              "1", 1, 16, 'x'));
+                                              "128", 1, -1, 'x'));
     op->addTag(TAG_BASIC);
     op->addTag(TAG_FTP);
     op->addTag(TAG_HTTP);
@@ -499,7 +499,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new UnitNumberOptionHandler(
-        PREF_MIN_SPLIT_SIZE, TEXT_MIN_SPLIT_SIZE, "20M", 1_m, 1_g, 'k'));
+        PREF_MIN_SPLIT_SIZE, TEXT_MIN_SPLIT_SIZE, "1M", 1_m, 1_g, 'k'));
     op->addTag(TAG_BASIC);
     op->addTag(TAG_FTP);
     op->addTag(TAG_HTTP);
@@ -532,7 +532,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new UnitNumberOptionHandler(
-        PREF_NO_FILE_ALLOCATION_LIMIT, TEXT_NO_FILE_ALLOCATION_LIMIT, "5M", 0));
+        PREF_NO_FILE_ALLOCATION_LIMIT, TEXT_NO_FILE_ALLOCATION_LIMIT, "0", 0));
     op->addTag(TAG_ADVANCED);
     op->addTag(TAG_FILE);
     op->setInitialOption(true);
@@ -588,7 +588,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(new OptimizeConcurrentDownloadsOptionHandler(
         PREF_OPTIMIZE_CONCURRENT_DOWNLOADS, TEXT_OPTIMIZE_CONCURRENT_DOWNLOADS,
-        A2_V_FALSE, OptionHandler::OPT_ARG));
+        A2_V_TRUE, OptionHandler::OPT_ARG));
     op->addTag(TAG_ADVANCED);
     op->setChangeGlobalOption(true);
     handlers.push_back(op);
@@ -612,7 +612,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new BooleanOptionHandler(PREF_PAUSE_METADATA,
-                                               TEXT_PAUSE_METADATA, A2_V_FALSE,
+                                               TEXT_PAUSE_METADATA, A2_V_TRUE,
                                                OptionHandler::OPT_ARG));
     op->addTag(TAG_ADVANCED);
     op->addTag(TAG_RPC);
@@ -658,7 +658,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new NumberOptionHandler(
-        PREF_SAVE_SESSION_INTERVAL, TEXT_SAVE_SESSION_INTERVAL, "0", 0));
+        PREF_SAVE_SESSION_INTERVAL, TEXT_SAVE_SESSION_INTERVAL, "20", 0));
     op->addTag(TAG_ADVANCED);
     handlers.push_back(op);
   }
@@ -676,7 +676,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
         // 256, hence better *not* get the default value from
         // getrlimit().
         "1024",
-        // 1 should not be a problem in practise, since the code
+        // 1 should not be a problem in practice, since the code
         // will only adjust if the specified value > the current
         // soft limit.
         // And sane systems have a default soft limit > 1.
@@ -725,20 +725,20 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new NumberOptionHandler(
-        PREF_SUMMARY_INTERVAL, TEXT_SUMMARY_INTERVAL, "60", 0, INT32_MAX));
+        PREF_SUMMARY_INTERVAL, TEXT_SUMMARY_INTERVAL, "20", 0, INT32_MAX));
     op->addTag(TAG_ADVANCED);
     handlers.push_back(op);
   }
   {
     OptionHandler* op(new BooleanOptionHandler(
-        PREF_TRUNCATE_CONSOLE_READOUT, TEXT_TRUNCATE_CONSOLE_READOUT, A2_V_TRUE,
+        PREF_TRUNCATE_CONSOLE_READOUT, TEXT_TRUNCATE_CONSOLE_READOUT, A2_V_FALSE,
         OptionHandler::OPT_ARG));
     op->addTag(TAG_ADVANCED);
     handlers.push_back(op);
   }
   {
     OptionHandler* op(new BooleanOptionHandler(
-        PREF_RPC_ALLOW_ORIGIN_ALL, TEXT_RPC_ALLOW_ORIGIN_ALL, A2_V_FALSE,
+        PREF_RPC_ALLOW_ORIGIN_ALL, TEXT_RPC_ALLOW_ORIGIN_ALL, A2_V_TRUE,
         OptionHandler::OPT_ARG));
     op->addTag(TAG_RPC);
     handlers.push_back(op);
@@ -766,7 +766,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new NumberOptionHandler(
-        PREF_RPC_LISTEN_PORT, TEXT_RPC_LISTEN_PORT, "6800", 1024, UINT16_MAX));
+        PREF_RPC_LISTEN_PORT, TEXT_RPC_LISTEN_PORT, "6880", 1024, UINT16_MAX));
     op->addTag(TAG_RPC);
     handlers.push_back(op);
   }
@@ -832,7 +832,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new NumberOptionHandler(
-        PREF_CONNECT_TIMEOUT, TEXT_CONNECT_TIMEOUT, "60", 1, 600));
+        PREF_CONNECT_TIMEOUT, TEXT_CONNECT_TIMEOUT, "30", 1, 600));
     op->addTag(TAG_FTP);
     op->addTag(TAG_HTTP);
     op->setInitialOption(true);
@@ -871,7 +871,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new NumberOptionHandler(PREF_MAX_TRIES, TEXT_MAX_TRIES,
-                                              "5", 0, -1, 'm'));
+                                              "0", 0, -1, 'm'));
     op->addTag(TAG_FTP);
     op->addTag(TAG_HTTP);
     op->setInitialOption(true);
@@ -924,7 +924,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(
-        new NumberOptionHandler(PREF_RETRY_WAIT, TEXT_RETRY_WAIT, "0", 0, 600));
+        new NumberOptionHandler(PREF_RETRY_WAIT, TEXT_RETRY_WAIT, "5", 0, 600));
     op->addTag(TAG_FTP);
     op->addTag(TAG_HTTP);
     op->setInitialOption(true);
@@ -969,7 +969,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(
-        new NumberOptionHandler(PREF_SPLIT, TEXT_SPLIT, "5", 1, -1, 's'));
+        new NumberOptionHandler(PREF_SPLIT, TEXT_SPLIT, "64", 1, -1, 's'));
     op->addTag(TAG_BASIC);
     op->addTag(TAG_FTP);
     op->addTag(TAG_HTTP);
@@ -986,7 +986,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new ParameterOptionHandler(
-        PREF_STREAM_PIECE_SELECTOR, TEXT_STREAM_PIECE_SELECTOR, A2_V_DEFAULT,
+        PREF_STREAM_PIECE_SELECTOR, TEXT_STREAM_PIECE_SELECTOR, A2_V_GEOM,
         {A2_V_DEFAULT, V_INORDER, A2_V_RANDOM, A2_V_GEOM}));
     op->addTag(TAG_FTP);
     op->addTag(TAG_HTTP);
@@ -1056,7 +1056,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
     OptionHandler* op(
         new BooleanOptionHandler(PREF_CONTENT_DISPOSITION_DEFAULT_UTF8,
                                  TEXT_CONTENT_DISPOSITION_DEFAULT_UTF8,
-                                 A2_V_FALSE, OptionHandler::OPT_ARG));
+                                 A2_V_TRUE, OptionHandler::OPT_ARG));
     op->addTag(TAG_ADVANCED);
     op->addTag(TAG_HTTP);
     op->setInitialOption(true);
@@ -1076,7 +1076,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new BooleanOptionHandler(
-        PREF_ENABLE_HTTP_PIPELINING, TEXT_ENABLE_HTTP_PIPELINING, A2_V_FALSE,
+        PREF_ENABLE_HTTP_PIPELINING, TEXT_ENABLE_HTTP_PIPELINING, A2_V_TRUE,
         OptionHandler::OPT_ARG));
     op->addTag(TAG_HTTP);
     op->setInitialOption(true);
@@ -1097,7 +1097,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(
         new BooleanOptionHandler(PREF_HTTP_ACCEPT_GZIP, TEXT_HTTP_ACCEPT_GZIP,
-                                 A2_V_FALSE, OptionHandler::OPT_ARG));
+                                 A2_V_TRUE, OptionHandler::OPT_ARG));
     op->addTag(TAG_HTTP);
     op->setInitialOption(true);
     op->setChangeGlobalOption(true);
@@ -1215,7 +1215,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new DefaultOptionHandler(
-        PREF_USER_AGENT, TEXT_USER_AGENT, "aria2/" PACKAGE_VERSION, A2STR::NIL,
+        PREF_USER_AGENT, TEXT_USER_AGENT, "Mozilla/5.0 (compatible)", A2STR::NIL,
         OptionHandler::REQ_ARG, 'U'));
     op->addTag(TAG_HTTP);
     op->setInitialOption(true);
@@ -1237,7 +1237,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new BooleanOptionHandler(
-        PREF_FTP_PASV, TEXT_FTP_PASV, A2_V_TRUE, OptionHandler::OPT_ARG, 'p'));
+        PREF_FTP_PASV, TEXT_FTP_PASV, A2_V_FALSE, OptionHandler::OPT_ARG, 'p'));
     op->addTag(TAG_FTP);
     op->setInitialOption(true);
     op->setChangeGlobalOption(true);
@@ -1461,7 +1461,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
 #ifdef ENABLE_BITTORRENT
   {
     OptionHandler* op(new BooleanOptionHandler(
-        PREF_BT_DETACH_SEED_ONLY, TEXT_BT_DETACH_SEED_ONLY, A2_V_FALSE,
+        PREF_BT_DETACH_SEED_ONLY, TEXT_BT_DETACH_SEED_ONLY, A2_V_TRUE,
         OptionHandler::OPT_ARG));
     op->addTag(TAG_BITTORRENT);
     handlers.push_back(op);
@@ -1470,7 +1470,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
     OptionHandler* op(
         new BooleanOptionHandler(PREF_BT_ENABLE_HOOK_AFTER_HASH_CHECK,
                                  TEXT_BT_ENABLE_HOOK_AFTER_HASH_CHECK,
-                                 A2_V_TRUE, OptionHandler::OPT_ARG));
+                                 A2_V_FALSE, OptionHandler::OPT_ARG));
     op->addTag(TAG_BITTORRENT);
     op->setInitialOption(true);
     op->setChangeGlobalOption(true);
@@ -1479,7 +1479,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new BooleanOptionHandler(PREF_BT_ENABLE_LPD,
-                                               TEXT_BT_ENABLE_LPD, A2_V_FALSE,
+                                               TEXT_BT_ENABLE_LPD, A2_V_TRUE,
                                                OptionHandler::OPT_ARG));
     op->addTag(TAG_BITTORRENT);
     op->setInitialOption(true);
@@ -1537,7 +1537,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new BooleanOptionHandler(
-        PREF_BT_LOAD_SAVED_METADATA, TEXT_BT_LOAD_SAVED_METADATA, A2_V_FALSE,
+        PREF_BT_LOAD_SAVED_METADATA, TEXT_BT_LOAD_SAVED_METADATA, A2_V_TRUE,
         OptionHandler::OPT_ARG));
     op->addTag(TAG_BITTORRENT);
     op->setInitialOption(true);
@@ -1561,7 +1561,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(
-        new NumberOptionHandler(PREF_BT_MAX_PEERS, TEXT_BT_MAX_PEERS, "55", 0));
+        new NumberOptionHandler(PREF_BT_MAX_PEERS, TEXT_BT_MAX_PEERS, "128", 0));
     op->addTag(TAG_BITTORRENT);
     op->setInitialOption(true);
     op->setChangeOption(true);
@@ -1612,7 +1612,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(new UnitNumberOptionHandler(
         PREF_BT_REQUEST_PEER_SPEED_LIMIT, TEXT_BT_REQUEST_PEER_SPEED_LIMIT,
-        "50K", 0));
+        "64K", 0));
     op->addTag(TAG_BITTORRENT);
     op->setInitialOption(true);
     op->setChangeOption(true);
@@ -1623,7 +1623,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(
         new BooleanOptionHandler(PREF_BT_REQUIRE_CRYPTO, TEXT_BT_REQUIRE_CRYPTO,
-                                 A2_V_FALSE, OptionHandler::OPT_ARG));
+                                 A2_V_TRUE, OptionHandler::OPT_ARG));
     op->addTag(TAG_BITTORRENT);
     op->setInitialOption(true);
     op->setChangeGlobalOption(true);
@@ -1649,7 +1649,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(
         new BooleanOptionHandler(PREF_BT_SAVE_METADATA, TEXT_BT_SAVE_METADATA,
-                                 A2_V_FALSE, OptionHandler::OPT_ARG));
+                                 A2_V_TRUE, OptionHandler::OPT_ARG));
     op->addTag(TAG_BITTORRENT);
     op->setInitialOption(true);
     op->setChangeGlobalOption(true);
@@ -1761,7 +1761,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new NumberOptionHandler(
-        PREF_DHT_MESSAGE_TIMEOUT, TEXT_DHT_MESSAGE_TIMEOUT, "10", 1, 60));
+        PREF_DHT_MESSAGE_TIMEOUT, TEXT_DHT_MESSAGE_TIMEOUT, "20", 1, 60));
     op->addTag(TAG_BITTORRENT);
     handlers.push_back(op);
   }
@@ -1774,7 +1774,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new BooleanOptionHandler(PREF_ENABLE_DHT6,
-                                               TEXT_ENABLE_DHT6, A2_V_FALSE,
+                                               TEXT_ENABLE_DHT6, A2_V_TRUE,
                                                OptionHandler::OPT_ARG));
     op->addTag(TAG_BASIC);
     op->addTag(TAG_BITTORRENT);
@@ -1878,7 +1878,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   }
   {
     OptionHandler* op(new FloatNumberOptionHandler(
-        PREF_SEED_RATIO, TEXT_SEED_RATIO, "1.0", 0.0));
+        PREF_SEED_RATIO, TEXT_SEED_RATIO, "0.0", 0.0));
     op->addTag(TAG_BITTORRENT);
     op->setInitialOption(true);
     op->setChangeGlobalOption(true);
@@ -1952,7 +1952,7 @@ std::vector<OptionHandler*> OptionHandlerFactory::createOptionHandlers()
   {
     OptionHandler* op(new ParameterOptionHandler(
         PREF_METALINK_PREFERRED_PROTOCOL, TEXT_METALINK_PREFERRED_PROTOCOL,
-        V_NONE, {V_HTTP, V_HTTPS, V_FTP, V_NONE}));
+        V_HTTPS, {V_HTTP, V_HTTPS, V_FTP, V_NONE}));
     op->addTag(TAG_METALINK);
     op->setInitialOption(true);
     op->setChangeGlobalOption(true);

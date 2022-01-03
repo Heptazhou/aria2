@@ -61,7 +61,7 @@ struct tm* localtime_r(const time_t* clock, struct tm* result)
   }
 
   EnterCriticalSection(&localtime_r_cs);
-  local_tm = localtime(clock);
+  local_tm = gmtime(clock);
   memcpy(result, local_tm, sizeof(struct tm));
   LeaveCriticalSection(&localtime_r_cs);
   return result;

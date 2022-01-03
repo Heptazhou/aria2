@@ -858,7 +858,7 @@
     "                              in segmented download. If 'default' is given,\n" \
     "                              aria2 selects piece so that it reduces the\n" \
     "                              number of establishing connection. This is\n" \
-    "                              reasonable default behaviour because\n" \
+    "                              reasonable default behavior because\n" \
     "                              establishing connection is an expensive\n" \
     "                              operation.\n"                        \
     "                              If 'inorder' is given, aria2 selects piece which\n" \

@@ -164,13 +164,14 @@ void writeHeaderConsole(Output& fp, Logger::LEVEL level, bool useColor)
 {
   struct timeval tv;
   gettimeofday(&tv, nullptr);
-  char datestr[15]; // 'MM/DD hh:mm:ss'+'\0' = 15 bytes
+  char datestr[20]; // 'YYYY-MM-DD hh:mm:ss'+'\0' = 20 bytes
   struct tm tm;
   // tv.tv_sec may not be of type time_t.
   time_t timesec = tv.tv_sec;
   localtime_r(&timesec, &tm);
-  size_t dateLength = strftime(datestr, sizeof(datestr), "%m/%d %H:%M:%S", &tm);
-  assert(dateLength <= (size_t)15);
+  size_t dateLength =
+      strftime(datestr, sizeof(datestr), "%Y-%m-%d %H:%M:%S", &tm);
+  assert(dateLength <= (size_t)20);
   if (useColor) {
     fp.printf("%s [%s%s\033[0m] ", datestr, levelColor(level),
               levelToString(level));
